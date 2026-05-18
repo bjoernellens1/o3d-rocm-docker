@@ -66,7 +66,7 @@ RUN set -eux; \
     mkdir -p /tmp/open3d-wheel; \
     if python3 -m pip download --only-binary=:all: --no-deps "open3d==${OPEN3D_WHEEL_VERSION}" -d /tmp/open3d-wheel; then \
       python3 -m pip install /tmp/open3d-wheel/open3d-*.whl; \
-      if python3 -c "import open3d as o3d; assert hasattr(o3d.core, 'sycl') and hasattr(o3d.core.sycl, 'get_available_devices')"; then \
+      if python3 -c "import open3d as o3d, sys; ok = hasattr(o3d.core, 'sycl') and hasattr(o3d.core.sycl, 'get_available_devices'); print('SYCL APIs missing from prebuilt wheel' if not ok else 'SYCL APIs available in prebuilt wheel'); sys.exit(0 if ok else 1)"; then \
         rm -rf /tmp/open3d-wheel; \
         exit 0; \
       fi; \
@@ -78,7 +78,7 @@ RUN set -eux; \
     . /opt/intel/oneapi/setvars.sh; \
     sycl_arch_flags=""; \
     for arch in $(echo "${ROCM_ARCHS}" | tr ';' ' '); do \
-      sycl_arch_flags="${sycl_arch_flags} -Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=${arch}"; \
+      sycl_arch_flags="${sycl_arch_flags}-Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=${arch} "; \
     done; \
     cmake -S /tmp/Open3D -B /tmp/Open3D/build -G Ninja \
       -DCMAKE_BUILD_TYPE=Release \
@@ -90,7 +90,7 @@ RUN set -eux; \
       -DCMAKE_C_COMPILER=icx \
       -DCMAKE_CXX_COMPILER=icpx \
       -DPython3_EXECUTABLE=/usr/bin/python3 \
-      -DCMAKE_SYCL_FLAGS="-fsycl -fsycl-targets=amdgcn-amd-amdhsa${sycl_arch_flags}" \
+      -DCMAKE_SYCL_FLAGS="-fsycl -fsycl-targets=amdgcn-amd-amdhsa ${sycl_arch_flags}" \
       -DSYCL_TARGETS="${ROCM_ARCHS}"; \
     cmake --build /tmp/Open3D/build --target pip-package --parallel "$(nproc)"; \
     python3 -m pip install /tmp/Open3D/build/lib/python_package/pip_package/open3d-*.whl; \
