@@ -46,7 +46,5 @@ jobs:
         with:
           context: .
           push: true
-          build-args: |
-            ROCM_ARCHS=gfx1100;gfx1151
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

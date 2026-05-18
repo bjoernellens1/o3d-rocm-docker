@@ -85,7 +85,6 @@ RUN set -eux; \
       -DCMAKE_C_COMPILER=icx \
       -DCMAKE_CXX_COMPILER=icpx \
       -DPython3_EXECUTABLE=/usr/bin/python3 \
-      -DCMAKE_CXX_FLAGS="-fsycl -fsycl-targets=amdgcn-amd-amdhsa" \
       -DCMAKE_SYCL_FLAGS="-fsycl -fsycl-targets=amdgcn-amd-amdhsa -Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=gfx1100 -Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=gfx1151" \
       -DSYCL_TARGETS="${ROCM_ARCHS}"; \
     cmake --build /tmp/Open3D/build --target pip-package --parallel "$(nproc)"; \
