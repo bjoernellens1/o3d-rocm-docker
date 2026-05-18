@@ -70,11 +70,16 @@ RUN set -eux; \
         rm -rf /tmp/open3d-wheel; \
         exit 0; \
       fi; \
+      echo "Prebuilt Open3D wheel does not expose SYCL APIs; falling back to source build."; \
       python3 -m pip uninstall -y open3d; \
     fi; \
     rm -rf /tmp/open3d-wheel; \
     git clone --depth 1 --branch "${OPEN3D_VERSION}" https://github.com/isl-org/Open3D.git /tmp/Open3D; \
     . /opt/intel/oneapi/setvars.sh; \
+    sycl_arch_flags=""; \
+    for arch in $(echo "${ROCM_ARCHS}" | tr ';' ' '); do \
+      sycl_arch_flags="${sycl_arch_flags} -Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=${arch}"; \
+    done; \
     cmake -S /tmp/Open3D -B /tmp/Open3D/build -G Ninja \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_PYTHON_MODULE=ON \
@@ -85,7 +90,7 @@ RUN set -eux; \
       -DCMAKE_C_COMPILER=icx \
       -DCMAKE_CXX_COMPILER=icpx \
       -DPython3_EXECUTABLE=/usr/bin/python3 \
-      -DCMAKE_SYCL_FLAGS="-fsycl -fsycl-targets=amdgcn-amd-amdhsa -Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=gfx1100 -Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=gfx1151" \
+      -DCMAKE_SYCL_FLAGS="-fsycl -fsycl-targets=amdgcn-amd-amdhsa${sycl_arch_flags}" \
       -DSYCL_TARGETS="${ROCM_ARCHS}"; \
     cmake --build /tmp/Open3D/build --target pip-package --parallel "$(nproc)"; \
     python3 -m pip install /tmp/Open3D/build/lib/python_package/pip_package/open3d-*.whl; \
