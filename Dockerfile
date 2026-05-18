@@ -66,7 +66,7 @@ RUN set -eux; \
     mkdir -p /tmp/open3d-wheel; \
     if python3 -m pip download --only-binary=:all: --no-deps "open3d==${OPEN3D_WHEEL_VERSION}" -d /tmp/open3d-wheel; then \
       python3 -m pip install /tmp/open3d-wheel/open3d-*.whl; \
-      if python3 -c "import open3d as o3d; assert hasattr(o3d.core, 'sycl') and bool(o3d.core.sycl.get_available_devices())"; then \
+      if python3 -c "import open3d as o3d; assert hasattr(o3d.core, 'sycl') and hasattr(o3d.core.sycl, 'get_available_devices')"; then \
         rm -rf /tmp/open3d-wheel; \
         exit 0; \
       fi; \

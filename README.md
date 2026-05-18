@@ -26,7 +26,7 @@ docker build \
 ## Run with display + GPU
 
 ```bash
-xhost +local:docker
+xhost +si:localuser:$(id -un)
 docker run --rm -it \
   --device=/dev/kfd \
   --device=/dev/dri \
@@ -35,6 +35,7 @@ docker run --rm -it \
   -e DISPLAY=$DISPLAY \
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   o3d-rocm:local
+xhost -si:localuser:$(id -un)
 ```
 
 ## CI/CD
