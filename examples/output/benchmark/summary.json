@@ -1,0 +1,746 @@
+{
+  "cases": [
+    {
+      "command": [
+        "/opt/open3d-venv/bin/python",
+        "/workspace/examples/tum_tensor_rgbd_odometry.py",
+        "--sequence",
+        "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "--device",
+        "CPU:0",
+        "--max-frames",
+        "20",
+        "--json-out",
+        "/workspace/examples/output/benchmark/odometry_CPU_0.json"
+      ],
+      "device": "CPU:0",
+      "metrics": {
+        "associated_pairs": 798,
+        "completed_all_requested_edges": true,
+        "device": "CPU:0",
+        "edges_per_second": 45.73678604224059,
+        "elapsed_s": 0.4154205322265625,
+        "failed_edges": 0,
+        "first_error": "",
+        "frames": [
+          {
+            "elapsed_s": 0.048308372497558594,
+            "fitness": 0.6477701822916667,
+            "frame": 1,
+            "inlier_rmse": 0.000568640127312392,
+            "ok": true,
+            "translation_norm": 0.013642444565673994
+          },
+          {
+            "elapsed_s": 0.018036603927612305,
+            "fitness": 0.65099609375,
+            "frame": 2,
+            "inlier_rmse": 0.0013612548355013132,
+            "ok": true,
+            "translation_norm": 0.029540019544545888
+          },
+          {
+            "elapsed_s": 0.01822209358215332,
+            "fitness": 0.677109375,
+            "frame": 3,
+            "inlier_rmse": 0.00023516306828241795,
+            "ok": true,
+            "translation_norm": 0.040298343976459663
+          },
+          {
+            "elapsed_s": 0.018130779266357422,
+            "fitness": 0.680107421875,
+            "frame": 4,
+            "inlier_rmse": 0.0003689424484036863,
+            "ok": true,
+            "translation_norm": 0.05095491084431547
+          },
+          {
+            "elapsed_s": 0.017905473709106445,
+            "fitness": 0.6729850260416667,
+            "frame": 5,
+            "inlier_rmse": 0.00028057245071977377,
+            "ok": true,
+            "translation_norm": 0.0624459025251703
+          },
+          {
+            "elapsed_s": 0.01804041862487793,
+            "fitness": 0.6775260416666666,
+            "frame": 6,
+            "inlier_rmse": 0.0006244129035621881,
+            "ok": true,
+            "translation_norm": 0.07460034362772665
+          },
+          {
+            "elapsed_s": 0.01790618896484375,
+            "fitness": 0.669267578125,
+            "frame": 7,
+            "inlier_rmse": 0.0002993766393046826,
+            "ok": true,
+            "translation_norm": 0.08609378890881966
+          },
+          {
+            "elapsed_s": 0.017532825469970703,
+            "fitness": 0.6479231770833334,
+            "frame": 8,
+            "inlier_rmse": 0.00039765750989317894,
+            "ok": true,
+            "translation_norm": 0.09771870594679598
+          },
+          {
+            "elapsed_s": 0.017426729202270508,
+            "fitness": 0.6746419270833334,
+            "frame": 9,
+            "inlier_rmse": 0.00027739553479477763,
+            "ok": true,
+            "translation_norm": 0.11139910970186104
+          },
+          {
+            "elapsed_s": 0.017452239990234375,
+            "fitness": 0.6336197916666667,
+            "frame": 10,
+            "inlier_rmse": 0.00031978488550521433,
+            "ok": true,
+            "translation_norm": 0.12482380136939601
+          },
+          {
+            "elapsed_s": 0.01708388328552246,
+            "fitness": 0.68310546875,
+            "frame": 11,
+            "inlier_rmse": 0.0006661072839051485,
+            "ok": true,
+            "translation_norm": 0.13718723735396599
+          },
+          {
+            "elapsed_s": 0.017258644104003906,
+            "fitness": 0.6910286458333333,
+            "frame": 12,
+            "inlier_rmse": 0.0009344526915811002,
+            "ok": true,
+            "translation_norm": 0.15029735011181458
+          },
+          {
+            "elapsed_s": 0.017910480499267578,
+            "fitness": 0.68619140625,
+            "frame": 13,
+            "inlier_rmse": 0.0003219113568775356,
+            "ok": true,
+            "translation_norm": 0.1622511326171855
+          },
+          {
+            "elapsed_s": 0.01997518539428711,
+            "fitness": 0.7153743489583333,
+            "frame": 14,
+            "inlier_rmse": 0.00036130903754383326,
+            "ok": true,
+            "translation_norm": 0.17246850176535033
+          },
+          {
+            "elapsed_s": 0.019723892211914062,
+            "fitness": 0.6898958333333334,
+            "frame": 15,
+            "inlier_rmse": 0.0002485176082700491,
+            "ok": true,
+            "translation_norm": 0.18590994429330912
+          },
+          {
+            "elapsed_s": 0.022853851318359375,
+            "fitness": 0.6946516927083334,
+            "frame": 16,
+            "inlier_rmse": 0.00022580976656172425,
+            "ok": true,
+            "translation_norm": 0.19920436339431344
+          },
+          {
+            "elapsed_s": 0.024646759033203125,
+            "fitness": 0.6949446614583333,
+            "frame": 17,
+            "inlier_rmse": 0.0003226812114007771,
+            "ok": true,
+            "translation_norm": 0.21240152225120934
+          },
+          {
+            "elapsed_s": 0.023148775100708008,
+            "fitness": 0.692509765625,
+            "frame": 18,
+            "inlier_rmse": 0.0002920320548582822,
+            "ok": true,
+            "translation_norm": 0.22705431784879607
+          },
+          {
+            "elapsed_s": 0.026089906692504883,
+            "fitness": 0.7172298177083334,
+            "frame": 19,
+            "inlier_rmse": 0.00018148071831092238,
+            "ok": true,
+            "translation_norm": 0.23922108426030558
+          }
+        ],
+        "last_translation_norm": 0.23922108426030558,
+        "mean_edge_s": 0.02092911067761873,
+        "mean_fitness": 0.6787830660635964,
+        "mean_inlier_rmse": 0.00043618432276784196,
+        "median_edge_s": 0.01804041862487793,
+        "method": "hybrid",
+        "open3d_version": "0.19.0+1e7b174",
+        "processed_edges": 19,
+        "sequence": "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz"
+      },
+      "mode": "odometry",
+      "ok": true,
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "\n      \"fitness\": 0.677109375,\n      \"frame\": 3,\n      \"inlier_rmse\": 0.00023516306828241795,\n      \"ok\": true,\n      \"translation_norm\": 0.040298343976459663\n    },\n    {\n      \"elapsed_s\": 0.018130779266357422,\n      \"fitness\": 0.680107421875,\n      \"frame\": 4,\n      \"inlier_rmse\": 0.0003689424484036863,\n      \"ok\": true,\n      \"translation_norm\": 0.05095491084431547\n    },\n    {\n      \"elapsed_s\": 0.017905473709106445,\n      \"fitness\": 0.6729850260416667,\n      \"frame\": 5,\n      \"inlier_rmse\": 0.00028057245071977377,\n      \"ok\": true,\n      \"translation_norm\": 0.0624459025251703\n    },\n    {\n      \"elapsed_s\": 0.01804041862487793,\n      \"fitness\": 0.6775260416666666,\n      \"frame\": 6,\n      \"inlier_rmse\": 0.0006244129035621881,\n      \"ok\": true,\n      \"translation_norm\": 0.07460034362772665\n    },\n    {\n      \"elapsed_s\": 0.01790618896484375,\n      \"fitness\": 0.669267578125,\n      \"frame\": 7,\n      \"inlier_rmse\": 0.0002993766393046826,\n      \"ok\": true,\n      \"translation_norm\": 0.08609378890881966\n    },\n    {\n      \"elapsed_s\": 0.017532825469970703,\n      \"fitness\": 0.6479231770833334,\n      \"frame\": 8,\n      \"inlier_rmse\": 0.00039765750989317894,\n      \"ok\": true,\n      \"translation_norm\": 0.09771870594679598\n    },\n    {\n      \"elapsed_s\": 0.017426729202270508,\n      \"fitness\": 0.6746419270833334,\n      \"frame\": 9,\n      \"inlier_rmse\": 0.00027739553479477763,\n      \"ok\": true,\n      \"translation_norm\": 0.11139910970186104\n    },\n    {\n      \"elapsed_s\": 0.017452239990234375,\n      \"fitness\": 0.6336197916666667,\n      \"frame\": 10,\n      \"inlier_rmse\": 0.00031978488550521433,\n      \"ok\": true,\n      \"translation_norm\": 0.12482380136939601\n    },\n    {\n      \"elapsed_s\": 0.01708388328552246,\n      \"fitness\": 0.68310546875,\n      \"frame\": 11,\n      \"inlier_rmse\": 0.0006661072839051485,\n      \"ok\": true,\n      \"translation_norm\": 0.13718723735396599\n    },\n    {\n      \"elapsed_s\": 0.017258644104003906,\n      \"fitness\": 0.6910286458333333,\n      \"frame\": 12,\n      \"inlier_rmse\": 0.0009344526915811002,\n      \"ok\": true,\n      \"translation_norm\": 0.15029735011181458\n    },\n    {\n      \"elapsed_s\": 0.017910480499267578,\n      \"fitness\": 0.68619140625,\n      \"frame\": 13,\n      \"inlier_rmse\": 0.0003219113568775356,\n      \"ok\": true,\n      \"translation_norm\": 0.1622511326171855\n    },\n    {\n      \"elapsed_s\": 0.01997518539428711,\n      \"fitness\": 0.7153743489583333,\n      \"frame\": 14,\n      \"inlier_rmse\": 0.00036130903754383326,\n      \"ok\": true,\n      \"translation_norm\": 0.17246850176535033\n    },\n    {\n      \"elapsed_s\": 0.019723892211914062,\n      \"fitness\": 0.6898958333333334,\n      \"frame\": 15,\n      \"inlier_rmse\": 0.0002485176082700491,\n      \"ok\": true,\n      \"translation_norm\": 0.18590994429330912\n    },\n    {\n      \"elapsed_s\": 0.022853851318359375,\n      \"fitness\": 0.6946516927083334,\n      \"frame\": 16,\n      \"inlier_rmse\": 0.00022580976656172425,\n      \"ok\": true,\n      \"translation_norm\": 0.19920436339431344\n    },\n    {\n      \"elapsed_s\": 0.024646759033203125,\n      \"fitness\": 0.6949446614583333,\n      \"frame\": 17,\n      \"inlier_rmse\": 0.0003226812114007771,\n      \"ok\": true,\n      \"translation_norm\": 0.21240152225120934\n    },\n    {\n      \"elapsed_s\": 0.023148775100708008,\n      \"fitness\": 0.692509765625,\n      \"frame\": 18,\n      \"inlier_rmse\": 0.0002920320548582822,\n      \"ok\": true,\n      \"translation_norm\": 0.22705431784879607\n    },\n    {\n      \"elapsed_s\": 0.026089906692504883,\n      \"fitness\": 0.7172298177083334,\n      \"frame\": 19,\n      \"inlier_rmse\": 0.00018148071831092238,\n      \"ok\": true,\n      \"translation_norm\": 0.23922108426030558\n    }\n  ],\n  \"last_translation_norm\": 0.23922108426030558,\n  \"mean_edge_s\": 0.02092911067761873,\n  \"mean_fitness\": 0.6787830660635964,\n  \"mean_inlier_rmse\": 0.00043618432276784196,\n  \"median_edge_s\": 0.01804041862487793,\n  \"method\": \"hybrid\",\n  \"open3d_version\": \"0.19.0+1e7b174\",\n  \"processed_edges\": 19,\n  \"sequence\": \"/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz\"\n}\n",
+      "wall_s": 1.1566436290740967
+    },
+    {
+      "command": [
+        "/opt/open3d-venv/bin/python",
+        "/workspace/examples/tum_tensor_rgbd_odometry.py",
+        "--sequence",
+        "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "--device",
+        "SYCL:0",
+        "--max-frames",
+        "20",
+        "--json-out",
+        "/workspace/examples/output/benchmark/odometry_SYCL_0.json"
+      ],
+      "device": "SYCL:0",
+      "error": "RuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "mode": "odometry",
+      "ok": false,
+      "returncode": 1,
+      "stderr_tail": "Traceback (most recent call last):\n  File \"/workspace/examples/tum_tensor_rgbd_odometry.py\", line 194, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/workspace/examples/tum_tensor_rgbd_odometry.py\", line 105, in main\n    intrinsic = make_intrinsic(sequence_dir, device)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/tum_tensor_rgbd_odometry.py\", line 61, in make_intrinsic\n    return o3d.core.Tensor(\n           ^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "stdout_tail": "",
+      "wall_s": 0.9424281120300293
+    },
+    {
+      "command": [
+        "/opt/open3d-venv/bin/python",
+        "/workspace/examples/tum_dense_slam.py",
+        "--sequence",
+        "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "--device",
+        "CPU:0",
+        "--max-frames",
+        "20",
+        "--json-out",
+        "/workspace/examples/output/benchmark/dense-slam_CPU_0.json"
+      ],
+      "device": "CPU:0",
+      "metrics": {
+        "associated_pairs": 798,
+        "device": "CPU:0",
+        "elapsed_s": 0.9933860301971436,
+        "extract_pointcloud_s": 0.02020883560180664,
+        "frames": [
+          {
+            "frame": 0,
+            "frame_elapsed_s": 0.02863788604736328,
+            "track_elapsed_s": 0.0
+          },
+          {
+            "fitness": 0.7146354166666666,
+            "frame": 1,
+            "frame_elapsed_s": 0.10574483871459961,
+            "inlier_rmse": 2.807083001243882e-05,
+            "track_elapsed_s": 0.07552909851074219,
+            "translation_norm": 0.03365572447917739
+          },
+          {
+            "fitness": 0.6798470052083333,
+            "frame": 2,
+            "frame_elapsed_s": 0.03604841232299805,
+            "inlier_rmse": 6.515257609862601e-06,
+            "track_elapsed_s": 0.006582736968994141,
+            "translation_norm": 0.03715827813112882
+          },
+          {
+            "fitness": 0.6417350260416667,
+            "frame": 3,
+            "frame_elapsed_s": 0.038068532943725586,
+            "inlier_rmse": 8.24436210677959e-06,
+            "track_elapsed_s": 0.007282733917236328,
+            "translation_norm": 0.05127848804918387
+          },
+          {
+            "fitness": 0.6253580729166667,
+            "frame": 4,
+            "frame_elapsed_s": 0.03484845161437988,
+            "inlier_rmse": 6.675739314232487e-06,
+            "track_elapsed_s": 0.006288051605224609,
+            "translation_norm": 0.06444662306453204
+          },
+          {
+            "fitness": 0.6333268229166666,
+            "frame": 5,
+            "frame_elapsed_s": 0.03668713569641113,
+            "inlier_rmse": 6.557641881954623e-06,
+            "track_elapsed_s": 0.005856752395629883,
+            "translation_norm": 0.07609302910347529
+          },
+          {
+            "fitness": 0.65291015625,
+            "frame": 6,
+            "frame_elapsed_s": 0.04193735122680664,
+            "inlier_rmse": 6.221856892807409e-06,
+            "track_elapsed_s": 0.007490396499633789,
+            "translation_norm": 0.08847620990911738
+          },
+          {
+            "fitness": 0.66818359375,
+            "frame": 7,
+            "frame_elapsed_s": 0.0721592903137207,
+            "inlier_rmse": 6.38295159660629e-06,
+            "track_elapsed_s": 0.009825468063354492,
+            "translation_norm": 0.10113420057474573
+          },
+          {
+            "fitness": 0.6831640625,
+            "frame": 8,
+            "frame_elapsed_s": 0.11018896102905273,
+            "inlier_rmse": 5.732395038648974e-06,
+            "track_elapsed_s": 0.011594057083129883,
+            "translation_norm": 0.11418500992295723
+          },
+          {
+            "fitness": 0.6899934895833333,
+            "frame": 9,
+            "frame_elapsed_s": 0.06035304069519043,
+            "inlier_rmse": 6.326159564196132e-06,
+            "track_elapsed_s": 0.008334159851074219,
+            "translation_norm": 0.12849280692690573
+          },
+          {
+            "fitness": 0.68353515625,
+            "frame": 10,
+            "frame_elapsed_s": 0.042115211486816406,
+            "inlier_rmse": 5.113856786920223e-06,
+            "track_elapsed_s": 0.009108781814575195,
+            "translation_norm": 0.15243860097687173
+          },
+          {
+            "fitness": 0.6894661458333333,
+            "frame": 11,
+            "frame_elapsed_s": 0.0317690372467041,
+            "inlier_rmse": 4.915481440548319e-06,
+            "track_elapsed_s": 0.0063974857330322266,
+            "translation_norm": 0.15299988843684106
+          },
+          {
+            "fitness": 0.6962174479166666,
+            "frame": 12,
+            "frame_elapsed_s": 0.031035184860229492,
+            "inlier_rmse": 4.745864316646475e-06,
+            "track_elapsed_s": 0.006622791290283203,
+            "translation_norm": 0.1647118382182688
+          },
+          {
+            "fitness": 0.7284928385416667,
+            "frame": 13,
+            "frame_elapsed_s": 0.13741421699523926,
+            "inlier_rmse": 5.826368123962311e-06,
+            "track_elapsed_s": 0.03399538993835449,
+            "translation_norm": 0.1858293487179302
+          },
+          {
+            "fitness": 0.730048828125,
+            "frame": 14,
+            "frame_elapsed_s": 0.0320582389831543,
+            "inlier_rmse": 5.13798113388475e-06,
+            "track_elapsed_s": 0.006903648376464844,
+            "translation_norm": 0.18617358822958383
+          },
+          {
+            "fitness": 0.7246907552083334,
+            "frame": 15,
+            "frame_elapsed_s": 0.03270864486694336,
+            "inlier_rmse": 4.676780463341856e-06,
+            "track_elapsed_s": 0.006791591644287109,
+            "translation_norm": 0.19959077043979076
+          },
+          {
+            "fitness": 0.7265559895833333,
+            "frame": 16,
+            "frame_elapsed_s": 0.03239035606384277,
+            "inlier_rmse": 4.537115273706149e-06,
+            "track_elapsed_s": 0.006556510925292969,
+            "translation_norm": 0.21259445727808868
+          },
+          {
+            "fitness": 0.7230305989583333,
+            "frame": 17,
+            "frame_elapsed_s": 0.027820587158203125,
+            "inlier_rmse": 4.361750598036451e-06,
+            "track_elapsed_s": 0.005981922149658203,
+            "translation_norm": 0.22547430993158674
+          },
+          {
+            "fitness": 0.743603515625,
+            "frame": 18,
+            "frame_elapsed_s": 0.027467012405395508,
+            "inlier_rmse": 4.240713678882457e-06,
+            "track_elapsed_s": 0.006175994873046875,
+            "translation_norm": 0.24010880476487007
+          },
+          {
+            "fitness": 0.7460384114583334,
+            "frame": 19,
+            "frame_elapsed_s": 0.03375673294067383,
+            "inlier_rmse": 4.38237748312531e-06,
+            "track_elapsed_s": 0.007227897644042969,
+            "translation_norm": 0.25341153749154655
+          }
+        ],
+        "frames_per_second": 20.133160113023614,
+        "last_translation_norm": 0.25341153749154655,
+        "loop_elapsed_s": 0.9933860301971436,
+        "mean_fitness": 0.6937280701754386,
+        "mean_frame_s": 0.04966045618057251,
+        "mean_inlier_rmse": 6.771867542977959e-06,
+        "mean_track_s": 0.012344498383371453,
+        "median_frame_s": 0.035448431968688965,
+        "median_track_s": 0.006903648376464844,
+        "open3d_version": "0.19.0+1e7b174",
+        "pointcloud_points": 44047,
+        "processed_frames": 20,
+        "sequence": "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "total_elapsed_s": 1.0135979652404785,
+        "tracked_edges": 19,
+        "tracked_edges_per_second": 19.12650210737243
+      },
+      "mode": "dense-slam",
+      "ok": true,
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "track_elapsed_s\": 0.007490396499633789,\n      \"translation_norm\": 0.08847620990911738\n    },\n    {\n      \"fitness\": 0.66818359375,\n      \"frame\": 7,\n      \"frame_elapsed_s\": 0.0721592903137207,\n      \"inlier_rmse\": 6.38295159660629e-06,\n      \"track_elapsed_s\": 0.009825468063354492,\n      \"translation_norm\": 0.10113420057474573\n    },\n    {\n      \"fitness\": 0.6831640625,\n      \"frame\": 8,\n      \"frame_elapsed_s\": 0.11018896102905273,\n      \"inlier_rmse\": 5.732395038648974e-06,\n      \"track_elapsed_s\": 0.011594057083129883,\n      \"translation_norm\": 0.11418500992295723\n    },\n    {\n      \"fitness\": 0.6899934895833333,\n      \"frame\": 9,\n      \"frame_elapsed_s\": 0.06035304069519043,\n      \"inlier_rmse\": 6.326159564196132e-06,\n      \"track_elapsed_s\": 0.008334159851074219,\n      \"translation_norm\": 0.12849280692690573\n    },\n    {\n      \"fitness\": 0.68353515625,\n      \"frame\": 10,\n      \"frame_elapsed_s\": 0.042115211486816406,\n      \"inlier_rmse\": 5.113856786920223e-06,\n      \"track_elapsed_s\": 0.009108781814575195,\n      \"translation_norm\": 0.15243860097687173\n    },\n    {\n      \"fitness\": 0.6894661458333333,\n      \"frame\": 11,\n      \"frame_elapsed_s\": 0.0317690372467041,\n      \"inlier_rmse\": 4.915481440548319e-06,\n      \"track_elapsed_s\": 0.0063974857330322266,\n      \"translation_norm\": 0.15299988843684106\n    },\n    {\n      \"fitness\": 0.6962174479166666,\n      \"frame\": 12,\n      \"frame_elapsed_s\": 0.031035184860229492,\n      \"inlier_rmse\": 4.745864316646475e-06,\n      \"track_elapsed_s\": 0.006622791290283203,\n      \"translation_norm\": 0.1647118382182688\n    },\n    {\n      \"fitness\": 0.7284928385416667,\n      \"frame\": 13,\n      \"frame_elapsed_s\": 0.13741421699523926,\n      \"inlier_rmse\": 5.826368123962311e-06,\n      \"track_elapsed_s\": 0.03399538993835449,\n      \"translation_norm\": 0.1858293487179302\n    },\n    {\n      \"fitness\": 0.730048828125,\n      \"frame\": 14,\n      \"frame_elapsed_s\": 0.0320582389831543,\n      \"inlier_rmse\": 5.13798113388475e-06,\n      \"track_elapsed_s\": 0.006903648376464844,\n      \"translation_norm\": 0.18617358822958383\n    },\n    {\n      \"fitness\": 0.7246907552083334,\n      \"frame\": 15,\n      \"frame_elapsed_s\": 0.03270864486694336,\n      \"inlier_rmse\": 4.676780463341856e-06,\n      \"track_elapsed_s\": 0.006791591644287109,\n      \"translation_norm\": 0.19959077043979076\n    },\n    {\n      \"fitness\": 0.7265559895833333,\n      \"frame\": 16,\n      \"frame_elapsed_s\": 0.03239035606384277,\n      \"inlier_rmse\": 4.537115273706149e-06,\n      \"track_elapsed_s\": 0.006556510925292969,\n      \"translation_norm\": 0.21259445727808868\n    },\n    {\n      \"fitness\": 0.7230305989583333,\n      \"frame\": 17,\n      \"frame_elapsed_s\": 0.027820587158203125,\n      \"inlier_rmse\": 4.361750598036451e-06,\n      \"track_elapsed_s\": 0.005981922149658203,\n      \"translation_norm\": 0.22547430993158674\n    },\n    {\n      \"fitness\": 0.743603515625,\n      \"frame\": 18,\n      \"frame_elapsed_s\": 0.027467012405395508,\n      \"inlier_rmse\": 4.240713678882457e-06,\n      \"track_elapsed_s\": 0.006175994873046875,\n      \"translation_norm\": 0.24010880476487007\n    },\n    {\n      \"fitness\": 0.7460384114583334,\n      \"frame\": 19,\n      \"frame_elapsed_s\": 0.03375673294067383,\n      \"inlier_rmse\": 4.38237748312531e-06,\n      \"track_elapsed_s\": 0.007227897644042969,\n      \"translation_norm\": 0.25341153749154655\n    }\n  ],\n  \"frames_per_second\": 20.133160113023614,\n  \"last_translation_norm\": 0.25341153749154655,\n  \"loop_elapsed_s\": 0.9933860301971436,\n  \"mean_fitness\": 0.6937280701754386,\n  \"mean_frame_s\": 0.04966045618057251,\n  \"mean_inlier_rmse\": 6.771867542977959e-06,\n  \"mean_track_s\": 0.012344498383371453,\n  \"median_frame_s\": 0.035448431968688965,\n  \"median_track_s\": 0.006903648376464844,\n  \"open3d_version\": \"0.19.0+1e7b174\",\n  \"pointcloud_points\": 44047,\n  \"processed_frames\": 20,\n  \"sequence\": \"/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz\",\n  \"total_elapsed_s\": 1.0135979652404785,\n  \"tracked_edges\": 19,\n  \"tracked_edges_per_second\": 19.12650210737243\n}\n",
+      "wall_s": 1.6869661808013916
+    },
+    {
+      "command": [
+        "/opt/open3d-venv/bin/python",
+        "/workspace/examples/tum_dense_slam.py",
+        "--sequence",
+        "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "--device",
+        "SYCL:0",
+        "--max-frames",
+        "20",
+        "--json-out",
+        "/workspace/examples/output/benchmark/dense-slam_SYCL_0.json"
+      ],
+      "device": "SYCL:0",
+      "error": "RuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "mode": "dense-slam",
+      "ok": false,
+      "returncode": 1,
+      "stderr_tail": "Traceback (most recent call last):\n  File \"/workspace/examples/tum_dense_slam.py\", line 164, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/workspace/examples/tum_dense_slam.py\", line 56, in main\n    intrinsic = make_intrinsic(sequence_dir, device)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/tum_tensor_rgbd_odometry.py\", line 61, in make_intrinsic\n    return o3d.core.Tensor(\n           ^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "stdout_tail": "",
+      "wall_s": 0.808687686920166
+    },
+    {
+      "command": [
+        "/opt/open3d-venv/bin/python",
+        "/workspace/examples/tum_vbg_slam.py",
+        "--sequence",
+        "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "--device",
+        "CPU:0",
+        "--max-frames",
+        "20",
+        "--json-out",
+        "/workspace/examples/output/benchmark/vbg-slam_CPU_0.json"
+      ],
+      "device": "CPU:0",
+      "metrics": {
+        "associated_pairs": 798,
+        "device": "CPU:0",
+        "elapsed_s": 0.9996838569641113,
+        "extract_mesh_s": 0.0,
+        "extract_pointcloud_s": 0.059975385665893555,
+        "frames": [
+          {
+            "block_coords_s": 0.0007109642028808594,
+            "frame": 0,
+            "frame_elapsed_s": 0.048673391342163086,
+            "integrate_s": 0.005501747131347656,
+            "raycast_s": 0.02866196632385254,
+            "track_s": 1.430511474609375e-06,
+            "translation_norm": 0.0
+          },
+          {
+            "block_coords_s": 0.0008099079132080078,
+            "fitness": 0.6122005208333333,
+            "frame": 1,
+            "frame_elapsed_s": 0.09659409523010254,
+            "inlier_rmse": 9.88877764029894e-06,
+            "integrate_s": 0.008522510528564453,
+            "raycast_s": 0.06838488578796387,
+            "track_s": 0.009753942489624023,
+            "translation_norm": 0.030937944106594686
+          },
+          {
+            "block_coords_s": 0.0004851818084716797,
+            "fitness": 0.5849544270833333,
+            "frame": 2,
+            "frame_elapsed_s": 0.07538223266601562,
+            "inlier_rmse": 3.841336365439929e-06,
+            "integrate_s": 0.008790731430053711,
+            "raycast_s": 0.0475306510925293,
+            "track_s": 0.011108636856079102,
+            "translation_norm": 0.03253654647689412
+          },
+          {
+            "block_coords_s": 0.0004897117614746094,
+            "fitness": 0.5708658854166667,
+            "frame": 3,
+            "frame_elapsed_s": 0.06955885887145996,
+            "inlier_rmse": 5.661147497448837e-06,
+            "integrate_s": 0.008994579315185547,
+            "raycast_s": 0.04256558418273926,
+            "track_s": 0.009969472885131836,
+            "translation_norm": 0.0456887151046134
+          },
+          {
+            "block_coords_s": 0.0004928112030029297,
+            "fitness": 0.6175032552083334,
+            "frame": 4,
+            "frame_elapsed_s": 0.056307315826416016,
+            "inlier_rmse": 5.304610112943919e-06,
+            "integrate_s": 0.0057370662689208984,
+            "raycast_s": 0.03213095664978027,
+            "track_s": 0.010272979736328125,
+            "translation_norm": 0.05824061644125967
+          },
+          {
+            "block_coords_s": 0.0004811286926269531,
+            "fitness": 0.6297721354166667,
+            "frame": 5,
+            "frame_elapsed_s": 0.052198171615600586,
+            "inlier_rmse": 4.979965069651371e-06,
+            "integrate_s": 0.006186723709106445,
+            "raycast_s": 0.027715444564819336,
+            "track_s": 0.00901031494140625,
+            "translation_norm": 0.06963708134800402
+          },
+          {
+            "block_coords_s": 0.0004496574401855469,
+            "fitness": 0.64859375,
+            "frame": 6,
+            "frame_elapsed_s": 0.037775278091430664,
+            "inlier_rmse": 4.612161774275592e-06,
+            "integrate_s": 0.004363536834716797,
+            "raycast_s": 0.01843881607055664,
+            "track_s": 0.006961345672607422,
+            "translation_norm": 0.08160777029278117
+          },
+          {
+            "block_coords_s": 0.0004367828369140625,
+            "fitness": 0.6630143229166666,
+            "frame": 7,
+            "frame_elapsed_s": 0.04150891304016113,
+            "inlier_rmse": 4.77676394439186e-06,
+            "integrate_s": 0.0043146610260009766,
+            "raycast_s": 0.02242732048034668,
+            "track_s": 0.006845712661743164,
+            "translation_norm": 0.09401187423403862
+          },
+          {
+            "block_coords_s": 0.00045371055603027344,
+            "fitness": 0.6779622395833333,
+            "frame": 8,
+            "frame_elapsed_s": 0.039269447326660156,
+            "inlier_rmse": 4.095633812539745e-06,
+            "integrate_s": 0.0042591094970703125,
+            "raycast_s": 0.020015954971313477,
+            "track_s": 0.007120370864868164,
+            "translation_norm": 0.10695070609907867
+          },
+          {
+            "block_coords_s": 0.0004780292510986328,
+            "fitness": 0.6848502604166666,
+            "frame": 9,
+            "frame_elapsed_s": 0.08679056167602539,
+            "inlier_rmse": 4.5493429752241354e-06,
+            "integrate_s": 0.006286144256591797,
+            "raycast_s": 0.05629086494445801,
+            "track_s": 0.010528802871704102,
+            "translation_norm": 0.12089825151784421
+          },
+          {
+            "block_coords_s": 0.00046944618225097656,
+            "fitness": 0.6795768229166667,
+            "frame": 10,
+            "frame_elapsed_s": 0.03981375694274902,
+            "inlier_rmse": 3.5830300930683734e-06,
+            "integrate_s": 0.0040094852447509766,
+            "raycast_s": 0.020787477493286133,
+            "track_s": 0.0071887969970703125,
+            "translation_norm": 0.14468388909666607
+          },
+          {
+            "block_coords_s": 0.0004627704620361328,
+            "fitness": 0.684892578125,
+            "frame": 11,
+            "frame_elapsed_s": 0.03904294967651367,
+            "inlier_rmse": 3.3844773952296237e-06,
+            "integrate_s": 0.004090785980224609,
+            "raycast_s": 0.020546436309814453,
+            "track_s": 0.006619930267333984,
+            "translation_norm": 0.1449731513326641
+          },
+          {
+            "block_coords_s": 0.00041031837463378906,
+            "fitness": 0.692900390625,
+            "frame": 12,
+            "frame_elapsed_s": 0.033403635025024414,
+            "inlier_rmse": 3.3310261642327532e-06,
+            "integrate_s": 0.0036821365356445312,
+            "raycast_s": 0.017426013946533203,
+            "track_s": 0.005560159683227539,
+            "translation_norm": 0.15667813802131503
+          },
+          {
+            "block_coords_s": 0.00041103363037109375,
+            "fitness": 0.7280891927083334,
+            "frame": 13,
+            "frame_elapsed_s": 0.033495187759399414,
+            "inlier_rmse": 4.761265245178947e-06,
+            "integrate_s": 0.00337982177734375,
+            "raycast_s": 0.017928600311279297,
+            "track_s": 0.005493879318237305,
+            "translation_norm": 0.17799720290050314
+          },
+          {
+            "block_coords_s": 0.0004093647003173828,
+            "fitness": 0.7281608072916667,
+            "frame": 14,
+            "frame_elapsed_s": 0.03196001052856445,
+            "inlier_rmse": 3.850680059258593e-06,
+            "integrate_s": 0.003437042236328125,
+            "raycast_s": 0.0163419246673584,
+            "track_s": 0.005530595779418945,
+            "translation_norm": 0.17818920496687046
+          },
+          {
+            "block_coords_s": 0.00042629241943359375,
+            "fitness": 0.723291015625,
+            "frame": 15,
+            "frame_elapsed_s": 0.03247833251953125,
+            "inlier_rmse": 3.2122263746714452e-06,
+            "integrate_s": 0.0033206939697265625,
+            "raycast_s": 0.017078161239624023,
+            "track_s": 0.005395174026489258,
+            "translation_norm": 0.19130852876937643
+          },
+          {
+            "block_coords_s": 0.00041174888610839844,
+            "fitness": 0.7257421875,
+            "frame": 16,
+            "frame_elapsed_s": 0.03463244438171387,
+            "inlier_rmse": 3.0467995202343445e-06,
+            "integrate_s": 0.003353595733642578,
+            "raycast_s": 0.01800990104675293,
+            "track_s": 0.006558895111083984,
+            "translation_norm": 0.20425672335625195
+          },
+          {
+            "block_coords_s": 0.0004436969757080078,
+            "fitness": 0.7231705729166666,
+            "frame": 17,
+            "frame_elapsed_s": 0.03681135177612305,
+            "inlier_rmse": 2.9864138468838064e-06,
+            "integrate_s": 0.003156900405883789,
+            "raycast_s": 0.018703222274780273,
+            "track_s": 0.0070993900299072266,
+            "translation_norm": 0.21702548199734756
+          },
+          {
+            "block_coords_s": 0.0006918907165527344,
+            "fitness": 0.74404296875,
+            "frame": 18,
+            "frame_elapsed_s": 0.05080580711364746,
+            "inlier_rmse": 2.727541414060397e-06,
+            "integrate_s": 0.004660606384277344,
+            "raycast_s": 0.029027700424194336,
+            "track_s": 0.008724689483642578,
+            "translation_norm": 0.23125601427280332
+          },
+          {
+            "block_coords_s": 0.0007724761962890625,
+            "fitness": 0.7466438802083334,
+            "frame": 19,
+            "frame_elapsed_s": 0.06156277656555176,
+            "inlier_rmse": 2.871949163818499e-06,
+            "integrate_s": 0.007504463195800781,
+            "raycast_s": 0.026882171630859375,
+            "track_s": 0.018758296966552734,
+            "translation_norm": 0.24431115261979258
+          }
+        ],
+        "frames_per_second": 20.006324860278305,
+        "last_translation_norm": 0.24431115261979258,
+        "loop_elapsed_s": 0.9996838569641113,
+        "mean_fitness": 0.6771698533442982,
+        "mean_frame_s": 0.04990322589874267,
+        "mean_inlier_rmse": 4.287639393097427e-06,
+        "mean_integrate_s": 0.005177617073059082,
+        "mean_raycast_s": 0.02834470272064209,
+        "mean_track_s": 0.008342178244339792,
+        "median_frame_s": 0.04066133499145508,
+        "median_integrate_s": 0.004339098930358887,
+        "median_raycast_s": 0.021607398986816406,
+        "median_track_s": 0.007120370864868164,
+        "mesh_vertices": 0,
+        "open3d_version": "0.19.0+1e7b174",
+        "pointcloud_points": 128937,
+        "processed_frames": 20,
+        "sequence": "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "total_elapsed_s": 1.059678077697754,
+        "tracked_edges": 19,
+        "tracked_edges_per_second": 19.00600861726439
+      },
+      "mode": "vbg-slam",
+      "ok": true,
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "004090785980224609,\n      \"raycast_s\": 0.020546436309814453,\n      \"track_s\": 0.006619930267333984,\n      \"translation_norm\": 0.1449731513326641\n    },\n    {\n      \"block_coords_s\": 0.00041031837463378906,\n      \"fitness\": 0.692900390625,\n      \"frame\": 12,\n      \"frame_elapsed_s\": 0.033403635025024414,\n      \"inlier_rmse\": 3.3310261642327532e-06,\n      \"integrate_s\": 0.0036821365356445312,\n      \"raycast_s\": 0.017426013946533203,\n      \"track_s\": 0.005560159683227539,\n      \"translation_norm\": 0.15667813802131503\n    },\n    {\n      \"block_coords_s\": 0.00041103363037109375,\n      \"fitness\": 0.7280891927083334,\n      \"frame\": 13,\n      \"frame_elapsed_s\": 0.033495187759399414,\n      \"inlier_rmse\": 4.761265245178947e-06,\n      \"integrate_s\": 0.00337982177734375,\n      \"raycast_s\": 0.017928600311279297,\n      \"track_s\": 0.005493879318237305,\n      \"translation_norm\": 0.17799720290050314\n    },\n    {\n      \"block_coords_s\": 0.0004093647003173828,\n      \"fitness\": 0.7281608072916667,\n      \"frame\": 14,\n      \"frame_elapsed_s\": 0.03196001052856445,\n      \"inlier_rmse\": 3.850680059258593e-06,\n      \"integrate_s\": 0.003437042236328125,\n      \"raycast_s\": 0.0163419246673584,\n      \"track_s\": 0.005530595779418945,\n      \"translation_norm\": 0.17818920496687046\n    },\n    {\n      \"block_coords_s\": 0.00042629241943359375,\n      \"fitness\": 0.723291015625,\n      \"frame\": 15,\n      \"frame_elapsed_s\": 0.03247833251953125,\n      \"inlier_rmse\": 3.2122263746714452e-06,\n      \"integrate_s\": 0.0033206939697265625,\n      \"raycast_s\": 0.017078161239624023,\n      \"track_s\": 0.005395174026489258,\n      \"translation_norm\": 0.19130852876937643\n    },\n    {\n      \"block_coords_s\": 0.00041174888610839844,\n      \"fitness\": 0.7257421875,\n      \"frame\": 16,\n      \"frame_elapsed_s\": 0.03463244438171387,\n      \"inlier_rmse\": 3.0467995202343445e-06,\n      \"integrate_s\": 0.003353595733642578,\n      \"raycast_s\": 0.01800990104675293,\n      \"track_s\": 0.006558895111083984,\n      \"translation_norm\": 0.20425672335625195\n    },\n    {\n      \"block_coords_s\": 0.0004436969757080078,\n      \"fitness\": 0.7231705729166666,\n      \"frame\": 17,\n      \"frame_elapsed_s\": 0.03681135177612305,\n      \"inlier_rmse\": 2.9864138468838064e-06,\n      \"integrate_s\": 0.003156900405883789,\n      \"raycast_s\": 0.018703222274780273,\n      \"track_s\": 0.0070993900299072266,\n      \"translation_norm\": 0.21702548199734756\n    },\n    {\n      \"block_coords_s\": 0.0006918907165527344,\n      \"fitness\": 0.74404296875,\n      \"frame\": 18,\n      \"frame_elapsed_s\": 0.05080580711364746,\n      \"inlier_rmse\": 2.727541414060397e-06,\n      \"integrate_s\": 0.004660606384277344,\n      \"raycast_s\": 0.029027700424194336,\n      \"track_s\": 0.008724689483642578,\n      \"translation_norm\": 0.23125601427280332\n    },\n    {\n      \"block_coords_s\": 0.0007724761962890625,\n      \"fitness\": 0.7466438802083334,\n      \"frame\": 19,\n      \"frame_elapsed_s\": 0.06156277656555176,\n      \"inlier_rmse\": 2.871949163818499e-06,\n      \"integrate_s\": 0.007504463195800781,\n      \"raycast_s\": 0.026882171630859375,\n      \"track_s\": 0.018758296966552734,\n      \"translation_norm\": 0.24431115261979258\n    }\n  ],\n  \"frames_per_second\": 20.006324860278305,\n  \"last_translation_norm\": 0.24431115261979258,\n  \"loop_elapsed_s\": 0.9996838569641113,\n  \"mean_fitness\": 0.6771698533442982,\n  \"mean_frame_s\": 0.04990322589874267,\n  \"mean_inlier_rmse\": 4.287639393097427e-06,\n  \"mean_integrate_s\": 0.005177617073059082,\n  \"mean_raycast_s\": 0.02834470272064209,\n  \"mean_track_s\": 0.008342178244339792,\n  \"median_frame_s\": 0.04066133499145508,\n  \"median_integrate_s\": 0.004339098930358887,\n  \"median_raycast_s\": 0.021607398986816406,\n  \"median_track_s\": 0.007120370864868164,\n  \"mesh_vertices\": 0,\n  \"open3d_version\": \"0.19.0+1e7b174\",\n  \"pointcloud_points\": 128937,\n  \"processed_frames\": 20,\n  \"sequence\": \"/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz\",\n  \"total_elapsed_s\": 1.059678077697754,\n  \"tracked_edges\": 19,\n  \"tracked_edges_per_second\": 19.00600861726439\n}\n",
+      "wall_s": 2.249351739883423
+    },
+    {
+      "command": [
+        "/opt/open3d-venv/bin/python",
+        "/workspace/examples/tum_vbg_slam.py",
+        "--sequence",
+        "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz",
+        "--device",
+        "SYCL:0",
+        "--max-frames",
+        "20",
+        "--json-out",
+        "/workspace/examples/output/benchmark/vbg-slam_SYCL_0.json"
+      ],
+      "device": "SYCL:0",
+      "error": "RuntimeError: [Open3D Error] (std::shared_ptr<DeviceHashBackend> open3d::core::CreateDeviceHashBackend(int64_t, const Dtype &, const SizeVector &, const std::vector<Dtype> &, const std::vector<SizeVector> &, const Device &, const HashBackendType &)) /tmp/Open3D/cpp/open3d/core/hashmap/DeviceHashBackend.cpp:38: Unimplemented device",
+      "mode": "vbg-slam",
+      "ok": false,
+      "returncode": 1,
+      "stderr_tail": "Traceback (most recent call last):\n  File \"/workspace/examples/tum_vbg_slam.py\", line 311, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/workspace/examples/tum_vbg_slam.py\", line 215, in main\n    slam = VBGSLAM(\n           ^^^^^^^^\n  File \"/workspace/examples/tum_vbg_slam.py\", line 54, in __init__\n    self.vg = VoxelBlockGrid(\n              ^^^^^^^^^^^^^^^\nRuntimeError: \u001b[1;31m[Open3D Error] (std::shared_ptr<DeviceHashBackend> open3d::core::CreateDeviceHashBackend(int64_t, const Dtype &, const SizeVector &, const std::vector<Dtype> &, const std::vector<SizeVector> &, const Device &, const HashBackendType &)) /tmp/Open3D/cpp/open3d/core/hashmap/DeviceHashBackend.cpp:38: Unimplemented device\n\u001b[0;m\n",
+      "stdout_tail": "",
+      "wall_s": 0.7066168785095215
+    }
+  ],
+  "devices": [
+    "CPU:0",
+    "SYCL:0"
+  ],
+  "generated_at": "2026-05-21T09:40:52+0000",
+  "max_frames": 20,
+  "modes": [
+    "odometry",
+    "dense-slam",
+    "vbg-slam"
+  ],
+  "sequence": "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz"
+}

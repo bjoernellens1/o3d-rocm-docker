@@ -1,0 +1,172 @@
+{
+  "associated_pairs": 798,
+  "completed_all_requested_edges": true,
+  "device": "CPU:0",
+  "edges_per_second": 45.73678604224059,
+  "elapsed_s": 0.4154205322265625,
+  "failed_edges": 0,
+  "first_error": "",
+  "frames": [
+    {
+      "elapsed_s": 0.048308372497558594,
+      "fitness": 0.6477701822916667,
+      "frame": 1,
+      "inlier_rmse": 0.000568640127312392,
+      "ok": true,
+      "translation_norm": 0.013642444565673994
+    },
+    {
+      "elapsed_s": 0.018036603927612305,
+      "fitness": 0.65099609375,
+      "frame": 2,
+      "inlier_rmse": 0.0013612548355013132,
+      "ok": true,
+      "translation_norm": 0.029540019544545888
+    },
+    {
+      "elapsed_s": 0.01822209358215332,
+      "fitness": 0.677109375,
+      "frame": 3,
+      "inlier_rmse": 0.00023516306828241795,
+      "ok": true,
+      "translation_norm": 0.040298343976459663
+    },
+    {
+      "elapsed_s": 0.018130779266357422,
+      "fitness": 0.680107421875,
+      "frame": 4,
+      "inlier_rmse": 0.0003689424484036863,
+      "ok": true,
+      "translation_norm": 0.05095491084431547
+    },
+    {
+      "elapsed_s": 0.017905473709106445,
+      "fitness": 0.6729850260416667,
+      "frame": 5,
+      "inlier_rmse": 0.00028057245071977377,
+      "ok": true,
+      "translation_norm": 0.0624459025251703
+    },
+    {
+      "elapsed_s": 0.01804041862487793,
+      "fitness": 0.6775260416666666,
+      "frame": 6,
+      "inlier_rmse": 0.0006244129035621881,
+      "ok": true,
+      "translation_norm": 0.07460034362772665
+    },
+    {
+      "elapsed_s": 0.01790618896484375,
+      "fitness": 0.669267578125,
+      "frame": 7,
+      "inlier_rmse": 0.0002993766393046826,
+      "ok": true,
+      "translation_norm": 0.08609378890881966
+    },
+    {
+      "elapsed_s": 0.017532825469970703,
+      "fitness": 0.6479231770833334,
+      "frame": 8,
+      "inlier_rmse": 0.00039765750989317894,
+      "ok": true,
+      "translation_norm": 0.09771870594679598
+    },
+    {
+      "elapsed_s": 0.017426729202270508,
+      "fitness": 0.6746419270833334,
+      "frame": 9,
+      "inlier_rmse": 0.00027739553479477763,
+      "ok": true,
+      "translation_norm": 0.11139910970186104
+    },
+    {
+      "elapsed_s": 0.017452239990234375,
+      "fitness": 0.6336197916666667,
+      "frame": 10,
+      "inlier_rmse": 0.00031978488550521433,
+      "ok": true,
+      "translation_norm": 0.12482380136939601
+    },
+    {
+      "elapsed_s": 0.01708388328552246,
+      "fitness": 0.68310546875,
+      "frame": 11,
+      "inlier_rmse": 0.0006661072839051485,
+      "ok": true,
+      "translation_norm": 0.13718723735396599
+    },
+    {
+      "elapsed_s": 0.017258644104003906,
+      "fitness": 0.6910286458333333,
+      "frame": 12,
+      "inlier_rmse": 0.0009344526915811002,
+      "ok": true,
+      "translation_norm": 0.15029735011181458
+    },
+    {
+      "elapsed_s": 0.017910480499267578,
+      "fitness": 0.68619140625,
+      "frame": 13,
+      "inlier_rmse": 0.0003219113568775356,
+      "ok": true,
+      "translation_norm": 0.1622511326171855
+    },
+    {
+      "elapsed_s": 0.01997518539428711,
+      "fitness": 0.7153743489583333,
+      "frame": 14,
+      "inlier_rmse": 0.00036130903754383326,
+      "ok": true,
+      "translation_norm": 0.17246850176535033
+    },
+    {
+      "elapsed_s": 0.019723892211914062,
+      "fitness": 0.6898958333333334,
+      "frame": 15,
+      "inlier_rmse": 0.0002485176082700491,
+      "ok": true,
+      "translation_norm": 0.18590994429330912
+    },
+    {
+      "elapsed_s": 0.022853851318359375,
+      "fitness": 0.6946516927083334,
+      "frame": 16,
+      "inlier_rmse": 0.00022580976656172425,
+      "ok": true,
+      "translation_norm": 0.19920436339431344
+    },
+    {
+      "elapsed_s": 0.024646759033203125,
+      "fitness": 0.6949446614583333,
+      "frame": 17,
+      "inlier_rmse": 0.0003226812114007771,
+      "ok": true,
+      "translation_norm": 0.21240152225120934
+    },
+    {
+      "elapsed_s": 0.023148775100708008,
+      "fitness": 0.692509765625,
+      "frame": 18,
+      "inlier_rmse": 0.0002920320548582822,
+      "ok": true,
+      "translation_norm": 0.22705431784879607
+    },
+    {
+      "elapsed_s": 0.026089906692504883,
+      "fitness": 0.7172298177083334,
+      "frame": 19,
+      "inlier_rmse": 0.00018148071831092238,
+      "ok": true,
+      "translation_norm": 0.23922108426030558
+    }
+  ],
+  "last_translation_norm": 0.23922108426030558,
+  "mean_edge_s": 0.02092911067761873,
+  "mean_fitness": 0.6787830660635964,
+  "mean_inlier_rmse": 0.00043618432276784196,
+  "median_edge_s": 0.01804041862487793,
+  "method": "hybrid",
+  "open3d_version": "0.19.0+1e7b174",
+  "processed_edges": 19,
+  "sequence": "/data/tum_rgbd/freiburg1_xyz/rgbd_dataset_freiburg1_xyz"
+}

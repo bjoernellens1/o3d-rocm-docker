@@ -1,0 +1,183 @@
+{
+  "device": "SYCL:0",
+  "environment": {
+    "o3d_sycl_backend": "source",
+    "oneapi_device_selector": "hip:*",
+    "open3d_version": "0.19.0+1e7b174",
+    "sycl_available": true,
+    "sycl_device_filter": "",
+    "sycl_devices": [
+      "SYCL:0"
+    ]
+  },
+  "generated_at": "2026-05-21T09:53:22+0000",
+  "results": [
+    {
+      "details": {
+        "o3d_sycl_backend": "source",
+        "oneapi_device_selector": "hip:*",
+        "open3d_version": "0.19.0+1e7b174",
+        "requested_device_available": true,
+        "sycl_available": true,
+        "sycl_device_filter": "",
+        "sycl_devices": [
+          "SYCL:0"
+        ]
+      },
+      "device": "SYCL:0",
+      "elapsed_s": 0.08605694770812988,
+      "expected_sycl": "must pass before any SYCL workload can run",
+      "name": "sycl_discovery",
+      "ok": true,
+      "returncode": 0,
+      "stage": "00_device",
+      "wall_s": 0.6837422847747803
+    },
+    {
+      "details": {
+        "dtype": "Float32",
+        "shape": [
+          8
+        ]
+      },
+      "device": "SYCL:0",
+      "elapsed_s": 0.09216761589050293,
+      "expected_sycl": "core tensor allocation",
+      "name": "tensor_empty_allocation",
+      "ok": true,
+      "returncode": 0,
+      "stage": "01_tensor_basic",
+      "wall_s": 0.7023296356201172
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.08156085014343262,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "host-to-device copy plus reduction",
+      "name": "tensor_host_copy_reduction",
+      "ok": false,
+      "returncode": 0,
+      "stage": "01_tensor_basic",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 71, in case_tensor_host_copy\n    tensor = o3d.core.Tensor(np.arange(8, dtype=np.float32), o3d.core.Dtype.Float32, device)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.7218654155731201
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.08228254318237305,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "fill kernel plus reduction",
+      "name": "tensor_zeros_reduction",
+      "ok": false,
+      "returncode": 0,
+      "stage": "01_tensor_basic",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 76, in case_tensor_zeros\n    tensor = o3d.core.Tensor.zeros((1024,), o3d.core.Dtype.Float32, device)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.677396297454834
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.08008027076721191,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "elementwise kernels plus reduction",
+      "name": "tensor_elementwise_reduction",
+      "ok": false,
+      "returncode": 0,
+      "stage": "02_tensor_kernels",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 81, in case_tensor_elementwise\n    data = o3d.core.Tensor.ones((1024,), o3d.core.Dtype.Float32, device)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.7088940143585205
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.08519768714904785,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "SYCL linalg path if MKL SYCL backend is working",
+      "name": "tensor_linalg_matmul_inv",
+      "ok": false,
+      "returncode": 0,
+      "stage": "02_tensor_kernels",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 87, in case_tensor_linalg\n    matrix = o3d.core.Tensor(\n             ^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.6616795063018799
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.08181262016296387,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "tensor image copy",
+      "name": "image_to_device",
+      "ok": false,
+      "returncode": 0,
+      "stage": "03_tensor_geometry",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 98, in case_image_to_device\n    image = o3d.t.geometry.Image(np.zeros((16, 16, 3), dtype=np.uint8)).to(device)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.7195637226104736
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.07551455497741699,
+      "error": "\u001b[1;31m[Open3D Error] (void open3d::t::geometry::RaycastingScene::SYCLImpl::InitializeDevice()) /tmp/Open3D/cpp/open3d/t/geometry/RaycastingScene.cpp:459: Caught exception creating sycl::device: No device of requested type available. Please check https://software.intel.com/content/www/us/en/develop/articles/intel-oneapi-dpcpp-system-requirements.html\n\u001b[0;m",
+      "error_type": "RuntimeError",
+      "expected_sycl": "Open3D has a SYCL RaycastingScene implementation",
+      "name": "raycasting_scene",
+      "ok": false,
+      "returncode": 0,
+      "stage": "03_tensor_geometry",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 103, in case_raycasting_scene\n    scene = o3d.t.geometry.RaycastingScene(1, device)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: \u001b[1;31m[Open3D Error] (void open3d::t::geometry::RaycastingScene::SYCLImpl::InitializeDevice()) /tmp/Open3D/cpp/open3d/t/geometry/RaycastingScene.cpp:459: Caught exception creating sycl::device: No device of requested type available. Please check https://software.intel.com/content/www/us/en/develop/articles/intel-oneapi-dpcpp-system-requirements.html\n\u001b[0;m\n",
+      "wall_s": 0.716799259185791
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.07559418678283691,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "ICP pose kernels dispatch CPU/CUDA only after basic tensor ops work",
+      "name": "tensor_icp",
+      "ok": false,
+      "returncode": 0,
+      "stage": "04_registration",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 136, in case_tensor_icp\n    source.point.positions = o3d.core.Tensor(points, o3d.core.Dtype.Float32, device)\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.7042779922485352
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.07813096046447754,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "RGB-D odometry kernels dispatch CPU/CUDA only in Open3D v0.19",
+      "name": "rgbd_odometry",
+      "ok": false,
+      "returncode": 0,
+      "stage": "05_rgbd",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 167, in case_rgbd_odometry\n    o3d.t.geometry.Image(color).to(device),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.6601531505584717
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.0004937648773193359,
+      "error": "\u001b[1;31m[Open3D Error] (std::shared_ptr<DeviceHashBackend> open3d::core::CreateDeviceHashBackend(int64_t, const Dtype &, const SizeVector &, const std::vector<Dtype> &, const std::vector<SizeVector> &, const Device &, const HashBackendType &)) /tmp/Open3D/cpp/open3d/core/hashmap/DeviceHashBackend.cpp:38: Unimplemented device\n\u001b[0;m",
+      "error_type": "RuntimeError",
+      "expected_sycl": "expected CPU/CUDA-only hash backend in Open3D v0.19 source",
+      "name": "voxel_block_grid",
+      "ok": false,
+      "returncode": 0,
+      "stage": "06_vbg_slam",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 193, in case_voxel_block_grid\n    vbg = o3d.t.geometry.VoxelBlockGrid(\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: \u001b[1;31m[Open3D Error] (std::shared_ptr<DeviceHashBackend> open3d::core::CreateDeviceHashBackend(int64_t, const Dtype &, const SizeVector &, const std::vector<Dtype> &, const std::vector<SizeVector> &, const Device &, const HashBackendType &)) /tmp/Open3D/cpp/open3d/core/hashmap/DeviceHashBackend.cpp:38: Unimplemented device\n\u001b[0;m\n",
+      "wall_s": 0.570563554763794
+    },
+    {
+      "device": "SYCL:0",
+      "elapsed_s": 0.08077478408813477,
+      "error": "hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)",
+      "error_type": "RuntimeError",
+      "expected_sycl": "inherits VoxelBlockGrid and RGB-D odometry limitations",
+      "name": "dense_slam_model",
+      "ok": false,
+      "returncode": 0,
+      "stage": "06_vbg_slam",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 311, in run_child\n    details = case[\"fn\"](device)\n              ^^^^^^^^^^^^^^^^^^\n  File \"/workspace/examples/open3d_sycl_capability_probe.py\", line 210, in case_dense_slam_model\n    o3d.core.Tensor.eye(4, o3d.core.Dtype.Float64, device),\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)\n",
+      "wall_s": 0.7344686985015869
+    }
+  ]
+}
