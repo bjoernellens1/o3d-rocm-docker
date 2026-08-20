@@ -1,50 +1,153 @@
-name: Build and Push Docker image
+name: Build and qualify Open3D ROCm images
 
 on:
   push:
-    branches: ["main"]
+    branches: [main, copilot/build-open3d-docker-rocm]
+    paths:
+      - "Dockerfile"
+      - "scripts/**"
+      - ".github/workflows/docker-build-push.yml"
+  pull_request:
+    branches: [main, copilot/build-open3d-docker-rocm]
+    paths:
+      - "Dockerfile"
+      - "scripts/**"
+      - ".github/workflows/docker-build-push.yml"
+  schedule:
+    - cron: "41 3 * * 1"
   workflow_dispatch:
 
 permissions:
   contents: read
   packages: write
 
+concurrency:
+  group: open3d-rocm-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/o3d-rocm
+  OPEN3D_AMD_SHA: 50bb2505be991392f7cdfd040802db7bbf6ef2a8
+  ROCM_VERSION: "7.2.4"
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [gfx1201, gfx1151, gfx90a]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to GHCR
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'schedule' && 'copilot/build-open3d-docker-rocm' || github.ref }}
+      - name: Resolve source revision
+        id: source
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME }}
-          tags: |
-            type=raw,value=ubuntu24.04-rocm7.2
-            type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push
+      - name: Build immutable candidate
         uses: docker/build-push-action@v6
         with:
           context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          file: Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.IMAGE_NAME }}:sha-${{ steps.source.outputs.sha }}-${{ matrix.arch }}
+          build-args: |
+            ROCM_ARCH=${{ matrix.arch }}
+            OPEN3D_AMD_SHA=${{ env.OPEN3D_AMD_SHA }}
+          cache-from: type=gha,scope=open3d-rocm-${{ matrix.arch }}
+          cache-to: type=gha,scope=open3d-rocm-${{ matrix.arch }},mode=max
+
+  qualify:
+    needs: build
+    if: github.event_name != 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [gfx1201, gfx1151, gfx90a]
+    runs-on: [self-hosted, linux, rocm, "${{ matrix.arch }}"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'schedule' && 'copilot/build-open3d-docker-rocm' || github.ref }}
+      - name: Resolve source revision
+        id: source
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve immutable candidate digest
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="${IMAGE_NAME}:sha-${{ steps.source.outputs.sha }}-${{ matrix.arch }}"
+          docker pull "$tag"
+          digest_ref="$(docker inspect --format='{{index .RepoDigests 0}}' "$tag")"
+          digest="${digest_ref##*@}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "digest_ref=$digest_ref" >> "$GITHUB_OUTPUT"
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+      - name: Execute Open3D Tensor and RGB-D odometry on AMD GPU
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm \
+            --device=/dev/kfd --device=/dev/dri \
+            --group-add video --ipc=host --shm-size=16G \
+            "${{ steps.image.outputs.digest_ref }}" \
+            python /opt/smoke/open3d_hip.py | tee open3d-runtime-smoke.json
+      - name: Write qualification evidence
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          IMAGE_TAG: ${{ steps.image.outputs.tag }}
+          IMAGE_DIGEST: ${{ steps.image.outputs.digest }}
+          GPU_ARCH: ${{ matrix.arch }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          payload = {
+              "schema_version": "open3d-rocm-qualification/v1",
+              "status": "QUALIFIED",
+              "source_revision": os.environ["SOURCE_SHA"],
+              "open3d_amd_revision": os.environ["OPEN3D_AMD_SHA"],
+              "rocm_version": os.environ["ROCM_VERSION"],
+              "gpu_arch": os.environ["GPU_ARCH"],
+              "image": os.environ["IMAGE_TAG"],
+              "digest": os.environ["IMAGE_DIGEST"],
+              "capabilities": [
+                  "open3d_tensor_gpu",
+                  "open3d_t_geometry_gpu",
+                  "open3d_rgbd_odometry_gpu",
+              ],
+          }
+          raw = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+          payload["qualification_id"] = hashlib.sha256(raw).hexdigest()
+          with open("container-qualification.json", "w") as f:
+              json.dump(payload, f, indent=2, sort_keys=True)
+              f.write("\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: open3d-rocm-qualified-${{ matrix.arch }}
+          path: |
+            container-qualification.json
+            open3d-runtime-smoke.json
+      - name: Promote last-known-good convenience tag
+        shell: bash
+        run: |
+          docker buildx imagetools create \
+            --tag "${IMAGE_NAME}:rocm-${ROCM_VERSION}-${{ matrix.arch }}" \
+            "${{ steps.image.outputs.digest_ref }}"
