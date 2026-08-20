@@ -1,46 +1,57 @@
 # o3d-rocm-docker
 
-Docker image for Open3D with ROCm acceleration and display support.
+Qualified Open3D Tensor images for AMD GPUs using AMD's native HIP port.
 
-## Base stack
+## Canonical stack
 
-- Ubuntu 24.04
-- ROCm 7.2
-- Open3D built with SYCL for AMD GPUs
-- Target GPU architectures: `gfx1100`, `gfx1151`
+- ROCm **7.2.4**
+- Ubuntu 22.04 / Python 3.10 ABI matching the ResearchFlow baseline capsules
+- AMD ROCm PyTorch 2.9.1 base pinned by OCI digest
+- `AMD-Ecosystem/Open3D` pinned to `50bb2505be991392f7cdfd040802db7bbf6ef2a8`
+- Open3D 0.19 native `USE_HIP=ON` backend
+- per-architecture images for `gfx1201`, `gfx1151`, and `gfx90a`
 
-## Build locally
+This replaces the earlier SYCL/Codeplay experiment. AMD's Open3D port reuses the normal Open3D CUDA/Tensor implementation while compiling the GPU translation units through HIP. The Python-facing device remains `o3d.core.Device("CUDA:0")`, which allows existing Open3D Tensor users such as VarSplat and SGAD-SLAM to keep their device-facing code unchanged.
 
-```bash
-docker build -t o3d-rocm:local .
-```
-
-If you have a direct Codeplay oneAPI-for-AMD plugin `.deb` URL, pass it during build:
+## Build
 
 ```bash
 docker build \
-  --build-arg CODEPLAY_AMD_PLUGIN_DEB_URL="<codeplay-deb-url>" \
+  --build-arg ROCM_ARCH=gfx1201 \
   -t o3d-rocm:local .
 ```
 
-## Run with display + GPU
+AMD Open3D currently requires CMake >=3.24; the image installs a pinned-compatible modern CMake before configuring the source tree.
+
+## Run the qualification smoke
 
 ```bash
-xhost +si:localuser:$(id -un)
-docker run --rm -it \
+docker run --rm \
   --device=/dev/kfd \
   --device=/dev/dri \
   --group-add video \
   --ipc=host \
-  -e DISPLAY=$DISPLAY \
-  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
   o3d-rocm:local
-xhost -si:localuser:$(id -un)
 ```
 
-## CI/CD
+The smoke is intentionally stronger than an import test. It must prove on a real AMD GPU that all of the following work:
 
-A GitHub Actions workflow builds and pushes the image to GHCR:
+- `o3d.core.cuda.is_available()`
+- `o3d.core.Device("CUDA:0")`
+- GPU Tensor allocation and arithmetic
+- `o3d.t.geometry.Image` / `RGBDImage`
+- `o3d.t.pipelines.odometry.rgbd_odometry_multi_scale`
 
-- `ghcr.io/<owner>/o3d-rocm:ubuntu24.04-rocm7.2`
-- `ghcr.io/<owner>/o3d-rocm:latest` (default branch only)
+Those capabilities are the subset required by the retained RGB-D SLAM baselines.
+
+## CI/CD and image identity
+
+The workflow builds candidates for `gfx1201`, `gfx1151`, and `gfx90a`, publishes immutable source-SHA tags, and then executes the Open3D smoke on matching self-hosted AMD runners. Only a candidate that passes the real GPU smoke is promoted to a convenience tag such as:
+
+```text
+ghcr.io/bjoernellens1/o3d-rocm:rocm-7.2.4-gfx1201
+```
+
+Scientific consumers should use the resulting immutable `image@sha256:<digest>` recorded in the qualification artifact rather than a moving tag.
+
+The scheduled weekly workflow only runs when this workflow exists on the repository's default branch. Until this portability branch is made the default branch or merged, push-triggered qualification works but the weekly schedule does not.
