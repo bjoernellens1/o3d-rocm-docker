@@ -1,0 +1,128 @@
+name: Build and qualify Open3D ROCm HIP images
+
+on:
+  push:
+    branches: [main, rocm-7.2-amd-hip]
+    paths: ["Dockerfile", "README.md", "scripts/**", ".github/workflows/publish.yml"]
+  pull_request:
+    branches: [main, rocm-7.2-amd-hip]
+    paths: ["Dockerfile", "README.md", "scripts/**", ".github/workflows/publish.yml"]
+  schedule:
+    - cron: "41 2 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: open3d-rocm-images-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [gfx1201, gfx1151, gfx90a]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'schedule' && 'rocm-7.2-amd-hip' || github.ref }}
+      - name: Resolve checked-out source SHA
+        id: source
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build immutable candidate
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ghcr.io/${{ github.repository_owner }}/open3d-rocm:sha-${{ steps.source.outputs.sha }}-${{ matrix.arch }}
+          build-args: |
+            ROCM_ARCH=${{ matrix.arch }}
+          cache-from: type=gha,scope=open3d-rocm-${{ matrix.arch }}
+          cache-to: type=gha,scope=open3d-rocm-${{ matrix.arch }},mode=max
+
+  qualify:
+    if: github.event_name != 'pull_request'
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [gfx1201, gfx1151, gfx90a]
+    runs-on: [self-hosted, linux, rocm, "${{ matrix.arch }}"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'schedule' && 'rocm-7.2-amd-hip' || github.ref }}
+      - name: Resolve checked-out source SHA
+        id: source
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve immutable candidate
+        id: image
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="ghcr.io/${GITHUB_REPOSITORY_OWNER}/open3d-rocm:sha-${{ steps.source.outputs.sha }}-${{ matrix.arch }}"
+          docker pull "$tag"
+          digest_ref="$(docker inspect --format='{{index .RepoDigests 0}}' "$tag")"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "digest_ref=$digest_ref" >> "$GITHUB_OUTPUT"
+          echo "digest=${digest_ref##*@}" >> "$GITHUB_OUTPUT"
+      - name: Open3D Tensor + RGB-D odometry qualification
+        run: |
+          docker run --rm \
+            --device=/dev/kfd --device=/dev/dri \
+            --group-add video --ipc=host --shm-size=16G \
+            "${{ steps.image.outputs.digest_ref }}" \
+            python /opt/smoke/open3d_tensor_rocm.py | tee open3d-runtime-smoke.json
+      - name: Write qualification manifest
+        shell: bash
+        run: |
+          cat > container-qualification.json <<JSON
+          {
+            "schema_version": "researchflow-component-qualification/v1",
+            "component": "open3d-rocm",
+            "backend": "rocm",
+            "backend_version": "7.2.4",
+            "gpu_arch": "${{ matrix.arch }}",
+            "image": "${{ steps.image.outputs.tag }}",
+            "digest": "${{ steps.image.outputs.digest }}",
+            "source_repository": "AMD-Ecosystem/Open3D",
+            "source_revision": "50bb2505be991392f7cdfd040802db7bbf6ef2a8",
+            "moat_revision": "f69bb67d70e7a47af00095dab7029c230a30be73",
+            "amd_port_audit_sha256": "c77e18af1ccaecd3d0803be300b6c7091fe847d3db72a181fc03f2613c9498b5",
+            "base_image_digest": "sha256:bdc8e61026cbb844ede93d44d2c50055f51ebb2041906b60182bf3bee3139054",
+            "capabilities": ["open3d_tensor_gpu", "open3d_t_geometry_gpu", "open3d_rgbd_odometry_gpu"],
+            "status": "qualified"
+          }
+          JSON
+      - uses: actions/upload-artifact@v4
+        with:
+          name: open3d-rocm-qualified-${{ matrix.arch }}
+          path: |
+            container-qualification.json
+            open3d-runtime-smoke.json
+      - name: Promote last-known-good tag
+        run: |
+          docker buildx imagetools create \
+            --tag "ghcr.io/${GITHUB_REPOSITORY_OWNER}/open3d-rocm:7.2.4-${{ matrix.arch }}" \
+            "${{ steps.image.outputs.digest_ref }}"
