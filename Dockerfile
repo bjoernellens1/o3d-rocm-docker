@@ -1,101 +1,66 @@
-FROM rocm/dev-ubuntu-24.04:7.2
+# Open3D 0.19 native HIP/Tensor build for the same ROCm/Python ABI used by
+# ResearchFlow baseline capsules.
+ARG ROCM_PYTORCH_IMAGE=rocm/pytorch:rocm7.2.4_ubuntu22.04_py3.10_pytorch_release_2.9.1@sha256:9c9592175fece788d6c0b86059012f49b568dc95c98c13879dfdf89c30342559
+FROM ${ROCM_PYTORCH_IMAGE}
 
-ARG DEBIAN_FRONTEND=noninteractive
-ARG OPEN3D_VERSION=v0.19.0
-ARG OPEN3D_WHEEL_VERSION=0.19.0
-ARG ROCM_ARCHS="gfx1100;gfx1151"
-ARG CODEPLAY_AMD_PLUGIN_DEB_URL=""
+ARG OPEN3D_AMD_SHA=50bb2505be991392f7cdfd040802db7bbf6ef2a8
+ARG ROCM_ARCH=gfx1201
+ARG AMD_MOAT_SHA=f69bb67d70e7a47af00095dab7029c230a30be73
 
-ENV PYTHONUNBUFFERED=1 \
+ENV DEBIAN_FRONTEND=noninteractive \
+    ROCM_HOME=/opt/rocm \
+    CUDA_HOME=/opt/rocm \
+    PYTORCH_ROCM_ARCH=${ROCM_ARCH} \
+    TORCH_CUDA_ARCH_LIST="" \
     PIP_NO_CACHE_DIR=1 \
-    DISPLAY=:0 \
-    QT_X11_NO_MITSHM=1 \
-    SYCL_DEVICE_FILTER=amd
+    EXPECT_BACKEND=rocm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates \
-    curl \
-    git \
-    gnupg \
-    lsb-release \
-    software-properties-common \
-    build-essential \
-    ninja-build \
-    ccache \
-    cmake \
-    pkg-config \
-    python3 \
-    python3-dev \
-    python3-pip \
-    python3-venv \
-    libgl1 \
-    libegl1 \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender1 \
-    libx11-6 \
-    libxrandr2 \
-    libxinerama1 \
-    libxcursor1 \
-    libxi6 \
-    libxkbcommon0 \
-    x11-apps \
-    && rm -rf /var/lib/apt/lists/*
+      build-essential git ninja-build cmake pkg-config ccache \
+      libgl1 libegl1 libglib2.0-0 libsm6 libxext6 libxrender1 \
+      xorg-dev libxcb-shm0 libglu1-mesa-dev libssl-dev \
+      libc++-dev libc++abi-dev libsdl2-dev libxi-dev libtbb-dev \
+      libosmesa6-dev libudev-dev libusb-1.0-0-dev autoconf libtool \
+    && rm -rf /var/lib/apt/lists/* \
+    && python -m pip install --upgrade pip setuptools wheel 'cmake>=3.24' ninja
 
-RUN curl -fsSL https://apt.repos.intel.com/oneapi/intel-oneapi-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/intel-oneapi-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/intel-oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" > /etc/apt/sources.list.d/oneapi.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-      intel-oneapi-compiler-dpcpp-cpp \
-      intel-oneapi-tbb-devel && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN set -eux; \
-    if [ -n "${CODEPLAY_AMD_PLUGIN_DEB_URL}" ]; then \
-      curl -fsSL "${CODEPLAY_AMD_PLUGIN_DEB_URL}" -o /tmp/codeplay-amd-plugin.deb; \
-      apt-get update; \
-      apt-get install -y --no-install-recommends /tmp/codeplay-amd-plugin.deb; \
-      rm -f /tmp/codeplay-amd-plugin.deb; \
-      rm -rf /var/lib/apt/lists/*; \
-    fi
-
-RUN python3 -m pip install --upgrade pip setuptools wheel
-
-RUN set -eux; \
-    mkdir -p /tmp/open3d-wheel; \
-    if python3 -m pip download --only-binary=:all: --no-deps "open3d==${OPEN3D_WHEEL_VERSION}" -d /tmp/open3d-wheel; then \
-      python3 -m pip install /tmp/open3d-wheel/open3d-*.whl; \
-      if python3 -c "import open3d as o3d, sys; ok = hasattr(o3d.core, 'sycl') and hasattr(o3d.core.sycl, 'get_available_devices'); print('SYCL APIs missing from prebuilt wheel' if not ok else 'SYCL APIs available in prebuilt wheel'); sys.exit(0 if ok else 1)"; then \
-        rm -rf /tmp/open3d-wheel; \
-        exit 0; \
-      fi; \
-      echo "Prebuilt Open3D wheel does not expose SYCL APIs; falling back to source build."; \
-      python3 -m pip uninstall -y open3d; \
-    fi; \
-    rm -rf /tmp/open3d-wheel; \
-    git clone --depth 1 --branch "${OPEN3D_VERSION}" https://github.com/isl-org/Open3D.git /tmp/Open3D; \
-    . /opt/intel/oneapi/setvars.sh; \
-    sycl_arch_flags=""; \
-    for arch in $(echo "${ROCM_ARCHS}" | tr ';' ' '); do \
-      sycl_arch_flags="${sycl_arch_flags}-Xsycl-target-backend=amdgcn-amd-amdhsa --offload-arch=${arch} "; \
-    done; \
-    cmake -S /tmp/Open3D -B /tmp/Open3D/build -G Ninja \
+WORKDIR /opt
+RUN git clone https://github.com/AMD-Ecosystem/Open3D.git Open3D \
+    && git -C Open3D checkout --detach ${OPEN3D_AMD_SHA} \
+    && test "$(git -C Open3D rev-parse HEAD)" = "${OPEN3D_AMD_SHA}" \
+    && cmake -S /opt/Open3D -B /opt/Open3D/build -G Ninja \
       -DCMAKE_BUILD_TYPE=Release \
+      -DUSE_HIP=ON \
+      -DCMAKE_HIP_COMPILER=/opt/rocm/llvm/bin/clang++ \
+      -DCMAKE_PREFIX_PATH=/opt/rocm \
+      -DCMAKE_HIP_ARCHITECTURES=${ROCM_ARCH} \
+      -DPython3_EXECUTABLE=$(which python) \
       -DBUILD_PYTHON_MODULE=ON \
-      -DBUILD_SYCL_MODULE=ON \
+      -DBUILD_GUI=OFF \
+      -DBUILD_WEBRTC=OFF \
+      -DBUILD_EXAMPLES=OFF \
+      -DBUILD_UNIT_TESTS=OFF \
+      -DBUILD_BENCHMARKS=OFF \
       -DBUILD_JUPYTER_EXTENSION=OFF \
-      -DBUILD_TENSORFLOW_OPS=OFF \
       -DBUILD_PYTORCH_OPS=OFF \
-      -DCMAKE_C_COMPILER=icx \
-      -DCMAKE_CXX_COMPILER=icpx \
-      -DPython3_EXECUTABLE=/usr/bin/python3 \
-      -DCMAKE_SYCL_FLAGS="-fsycl -fsycl-targets=amdgcn-amd-amdhsa ${sycl_arch_flags}" \
-      -DSYCL_TARGETS="${ROCM_ARCHS}"; \
-    cmake --build /tmp/Open3D/build --target pip-package --parallel "$(nproc)"; \
-    python3 -m pip install /tmp/Open3D/build/lib/python_package/pip_package/open3d-*.whl; \
-    rm -rf /tmp/Open3D
+      -DBUILD_TENSORFLOW_OPS=OFF \
+      -DBUNDLE_OPEN3D_ML=OFF \
+      -DBUILD_ISPC_MODULE=OFF \
+      -DBUILD_COMMON_CUDA_ARCHS=OFF \
+    && cmake --build /opt/Open3D/build --target pip-package --parallel "$(nproc)" \
+    && python -m pip install /opt/Open3D/build/lib/python_package/pip_package/open3d-*.whl \
+    && rm -rf /opt/Open3D/build
+
+COPY scripts/smoke/open3d_hip.py /opt/smoke/open3d_hip.py
+
+LABEL org.opencontainers.image.source="https://github.com/AMD-Ecosystem/Open3D" \
+      researchflow.component="open3d-rocm" \
+      researchflow.backend="rocm" \
+      researchflow.rocm="7.2.4" \
+      researchflow.open3d.version="0.19.0" \
+      researchflow.open3d.amd.sha="${OPEN3D_AMD_SHA}" \
+      researchflow.amd_moat.sha="${AMD_MOAT_SHA}" \
+      researchflow.gpu.arch="${ROCM_ARCH}"
 
 WORKDIR /workspace
-
-CMD ["python3", "-c", "import open3d as o3d; print('Open3D', o3d.__version__); print('SYCL devices:', o3d.core.sycl.get_available_devices())"]
+CMD ["python", "/opt/smoke/open3d_hip.py"]
