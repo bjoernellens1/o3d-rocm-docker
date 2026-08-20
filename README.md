@@ -1,82 +1,26 @@
-# o3d-rocm-docker
+# AMD Open3D HIP container
 
-Container and repro examples for evaluating Open3D tensor workloads on AMD ROCm.
-The practical baseline here is ROCm 7.2 on `gfx1151`; Open3D SYCL on AMD is
-treated as an experimental probe, not a reliable acceleration path.
+Canonical ResearchFlow candidate for GPU-backed Open3D Tensor operations on AMD.
 
-## Base Stack
+Pinned inputs:
 
-- Ubuntu 24.04
-- ROCm 7.2
-- Intel oneAPI DPC++ compiler/runtime
-- Open3D v0.19.0 built from source
-- Target GPU architectures: `gfx1100`, `gfx1151`
+- AMD Open3D `moat-port`: `50bb2505be991392f7cdfd040802db7bbf6ef2a8`
+- MOAT audit revision: `f69bb67d70e7a47af00095dab7029c230a30be73`
+- ROCm: 7.2.4
+- ROCm base image digest: `sha256:bdc8e61026cbb844ede93d44d2c50055f51ebb2041906b60182bf3bee3139054`
+- Python wheel target: CPython 3.10
 
-## Build Locally
+The build uses AMD Open3D's native `USE_HIP=ON` path, not the earlier
+SYCL/Unified-Runtime workaround. AMD deliberately preserves Open3D's CUDA-facing
+GPU device surface, so existing baseline code using `o3d.core.Device("CUDA:0")`
+can execute on ROCm without a method-specific device-string patch.
 
-The default build uses a pinned source build of the Unified Runtime HIP adapter
-and applies a small device-info patch so `sycl-ls --verbose` can enumerate the
-AMD HIP device cleanly.
+A candidate is not qualified until `scripts/smoke/open3d_tensor_rocm.py` runs on
+real AMD hardware. The smoke covers core Tensor arithmetic and the exact
+`o3d.t.pipelines.odometry.rgbd_odometry_multi_scale` API used by VarSplat and
+SGAD-SLAM.
 
-```bash
-podman build \
-  --build-arg SYCL_BACKEND=source \
-  -t localhost/o3d-rocm:local .
-```
-
-Supported backend modes:
-
-- `SYCL_BACKEND=source`: build Open3D with SYCL and install a pinned source-built HIP adapter.
-- `SYCL_BACKEND=none`: build Open3D without the SYCL module for CPU-only checks.
-- `SYCL_BACKEND=codeplay`: install a Codeplay AMD plugin `.deb` from `CODEPLAY_AMD_PLUGIN_DEB_URL`.
-
-Codeplay mode is intentionally explicit because the public Codeplay AMD plugin
-matrix does not currently line up cleanly with ROCm 7.2 / `gfx1151`.
-
-```bash
-podman build \
-  --build-arg SYCL_BACKEND=codeplay \
-  --build-arg CODEPLAY_AMD_PLUGIN_DEB_URL="<codeplay-deb-url>" \
-  -t localhost/o3d-rocm:codeplay .
-```
-
-## Run On Fedora Podman
-
-For rootless Fedora Podman with AMD GPU passthrough, use `/dev/kfd`,
-`/dev/dri`, group passthrough, disabled SELinux relabeling for the workspace
-mount, unconfined seccomp, and host IPC:
-
-```bash
-podman run --rm -it \
-  --device=/dev/kfd \
-  --device=/dev/dri \
-  --group-add keep-groups \
-  --security-opt=label=disable \
-  --security-opt=seccomp=unconfined \
-  --ipc=host \
-  --userns=keep-id \
-  -v "$(pwd):/workspace:rw" \
-  -w /workspace \
-  localhost/o3d-rocm:local
-```
-
-## Current Result
-
-The built image sees `SYCL:0`, but useful Open3D tensor execution on the ROCm
-SYCL path is not working on this stack. Basic allocation succeeds, while the
-first host-to-device tensor copy/fill fails with:
-
-```text
-hip backend failed with error: 53 (UR_RESULT_ERROR_INVALID_ENUMERATION)
-```
-
-CPU Open3D tensor odometry, dense SLAM, and VoxelBlockGrid SLAM examples work
-and emit timing metrics. See [examples/README.md](/home/bjoern/git/o3d-rocm-docker/examples/README.md)
-for exact commands and recorded outputs.
-
-## CI/CD
-
-A GitHub Actions workflow builds and pushes the image to GHCR:
-
-- `ghcr.io/<owner>/o3d-rocm:ubuntu24.04-rocm7.2`
-- `ghcr.io/<owner>/o3d-rocm:latest` on the default branch
+The AMD port is based on Open3D 0.19.0. VarSplat and SGAD-SLAM paper-mode images
+pin Open3D 0.18.0; SplaTAM pins 0.16.0. A newer Open3D is therefore an explicit
+controlled/stress portability adaptation until a version-specific backport or
+cross-version equivalence gate passes.
